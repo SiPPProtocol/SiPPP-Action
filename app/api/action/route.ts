@@ -1,5 +1,7 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
+import fetch from 'node-fetch';
+import { Buffer } from 'buffer';
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -65,28 +67,16 @@ function getIPFSHash(url: string): string | null {
   }
 }
 
-async function loadIPFSClient() {
-  const { create } = await import('ipfs-http-client');
-  return create({ url: 'https://ipfs.infura.io:5001/api/v0' });
-}
-
-
 async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   try {
-    const ipfs = await loadIPFSClient();
-    const files = await ipfs.get(hash);
+    const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}`);
     
-    // Assuming the file is the first item in the array
-    if (files.length === 0) {
-      return null;
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image from IPFS: ${response.statusText}`);
     }
     
-    const image = files[0];
-    
-    // Read the file content as buffer
-    const buffer = Buffer.from(image.content);
-    
-    return buffer;
+    const buffer = await response.arrayBuffer();
+    return Buffer.from(buffer);
   } catch (error) {
     console.error('Error fetching image from IPFS:', error);
     return null;
