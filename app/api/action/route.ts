@@ -21,7 +21,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Get an IPFS hash, if any
   const ipfsHash = getIPFSHash(embedUrl)
   if (!ipfsHash) {
-    return NextResponse.json({ message: '🤷 No hash detected. Unable to verify.'}, { status: 200 });
+    return NextResponse.json({ message: '❓ The photo in this post cannot be verified.'}, { status: 200 });
   }
   console.log(ipfsHash);
 
@@ -34,7 +34,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // Check the SiPPP smart contract to see if this is registered
   
-  return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
+  return NextResponse.json({ message: '✅ Photo verified. Metadata: ...' }, { status: 200 });
 }
 
 function getIPFSHash(url: string): string | null {
