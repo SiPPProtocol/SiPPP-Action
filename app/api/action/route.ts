@@ -32,7 +32,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
   const exifData = await extractMetadataFromImage(imageBuffer);
   console.log(exifData);
-  const exifDataString = JSON.stringify(exifData);
+  const exifDataString = JSON.stringify(exifData.image);
+  console.log(exifDataString);
 
   // Check the SiPPP smart contract to see if this is registered
   
