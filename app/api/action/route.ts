@@ -9,7 +9,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 //     return new NextResponse('Message not valid', { status: 500 });
 //   }
   
-  return NextResponse.json({ message: 'Hello from the frame route' }, { status: 200 });
+  return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
   
 export async function POST(req: NextRequest): Promise<Response> {
