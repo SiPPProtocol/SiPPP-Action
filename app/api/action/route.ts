@@ -11,9 +11,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // Find the url, if any
   const embedUrl = message?.raw?.action?.cast?.embeds?.[0]?.url;
-  if (!embedUrl) {
-    return new NextResponse({ message: 'No photograph detect to verify.'}, { status: 200 });
-  }
+//   if (!embedUrl) {
+//     return new NextResponse({ message: 'No photograph detected.'}, { status: 200 });
+//   }
 
   console.log(embedUrl);
   
