@@ -26,7 +26,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log(ipfsHash);
 
   // Get the image metadata
-  const imageBuffer = loadImageFromIPFS(ipfsHash);
+  const imageBuffer = await loadImageFromIPFS(ipfsHash);
+  if (!imageBuffer) {
+    return NextResponse.json({ message: '🤦 No photograph detected.'}, { status: 200 });
+  }
   console.log('Loaded image', !!imageBuffer)
 
   // Check the SiPPP smart contract to see if this is registered
