@@ -143,7 +143,14 @@
   dependencies:
     "@tanstack/query-core" "5.49.1"
 
-"@types/node@^20.11.8", "@types/node@>=13.7.0":
+"@types/exif@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.npmjs.org/@types/exif/-/exif-0.6.5.tgz"
+  integrity sha512-MDOzgEwI/DH6MNsGEZYy4MCVMS4OjnOiZoji1gVzUtA7RvMmvC8V5rbWbDZoUl0A+KhZwToTSwUB8OWQVXDhtA==
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*", "@types/node@^20.11.8", "@types/node@>=13.7.0":
   version "20.11.8"
   resolved "https://registry.npmjs.org/@types/node/-/node-20.11.8.tgz"
   integrity sha512-i7omyekpPTNdv4Jb/Rgqg0RU8YqLcNsI12quKSDkRXNfx7Wxdm6HhK1awT3xTgEkgxPn3bvnSpiEAc7a7Lpyow==
