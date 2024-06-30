@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
-  console.log(isValid, message.raw);
+  console.log(isValid, message);
 
-//   if (!isValid) {
-//     return new NextResponse('Message not valid', { status: 500 });
-//   }
+  if (!isValid) {
+    return new NextResponse('Message not valid', { status: 500 });
+  }
   
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
