@@ -95,12 +95,10 @@ async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   
   
 export async function POST(req: NextRequest): Promise<Response> {
-  console.log('POST');
   return getResponse(req);
 }
   
 export async function GET(req: NextRequest): Promise<Response> {
-  console.log('GET');
   return NextResponse.json({
     "name": "Verify with SiPPP",
     "icon": "verify",
