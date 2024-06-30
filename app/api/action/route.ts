@@ -25,7 +25,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
 
-function getIPFSHash(url) {
+function getIPFSHash(url: string): string | null {
   try {
     const parsedUrl = new URL(url);
     
@@ -41,7 +41,7 @@ function getIPFSHash(url) {
     }
     
     // Extract the hash
-    let hash = null;
+    let hash: string | null = null;
     if (parsedUrl.protocol === 'ipfs:') {
       hash = parsedUrl.hostname + parsedUrl.pathname;
     } else if (parsedUrl.pathname.startsWith('/ipfs/')) {
