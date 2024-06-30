@@ -32,12 +32,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
   const exifData = await extractMetadataFromImage(imageBuffer);
   console.log(exifData);
-  const exifDataString = JSON.stringify(exifData.image);
-  console.log(exifDataString);
 
   // Check the SiPPP smart contract to see if this is registered
   
-  return NextResponse.json({ message: `✅ Photo verified. Metadata: ${exifDataString}` }, { status: 200 });
+  return NextResponse.json({ message: `✅ Photo verified. Metadata: ${exifData.image.Make}` }, { status: 200 });
 }
 
 function getIPFSHash(url: string): string | null {
