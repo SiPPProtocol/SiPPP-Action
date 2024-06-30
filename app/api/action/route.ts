@@ -9,7 +9,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse('Message not valid', { status: 500 });
   }
 
-  const embed = message.raw.action; //cast.embeds[0];
+  const embed = message.raw.action.cast; //cast.embeds[0];
   console.log(embed);
   
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
