@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>zizzamia.xyz</h1>
+      <h1>SiPPP Farcaster Action</h1>
     </>
   );
 }
