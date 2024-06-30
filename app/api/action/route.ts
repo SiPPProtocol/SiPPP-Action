@@ -9,6 +9,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (!isValid) {
     return new NextResponse('Message not valid', { status: 500 });
   }
+
+  if (message) {
+    console.log(message.raw);
+  }
   
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
