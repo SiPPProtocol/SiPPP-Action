@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Buffer } from 'buffer';
 import exif from 'exif';
 
+const notDetected = '🤦 No photograph detected.'
+const notVerified = '❓ The photo in this post cannot be verified.'
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -15,28 +17,33 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Find the url, if any
   const embedUrl = message?.raw?.action?.cast?.embeds?.[0]?.url;
   if (!embedUrl) {
-    return NextResponse.json({ message: '🤦 No photograph detected.'}, { status: 200 });
+    return NextResponse.json({ message: notDetected}, { status: 200 });
   }
 
   // Get an IPFS hash, if any
   const ipfsHash = getIPFSHash(embedUrl)
   if (!ipfsHash) {
-    return NextResponse.json({ message: '❓ The photo in this post cannot be verified.'}, { status: 200 });
+    return NextResponse.json({ message: notVerified}, { status: 200 });
   }
   console.log(ipfsHash);
 
   // Get the image and metadata
   const imageBuffer = await loadImageFromIPFS(ipfsHash);
   if (!imageBuffer) {
-    return NextResponse.json({ message: '🤦 No photograph detected.'}, { status: 200 });
+    return NextResponse.json({ message: notDetected}, { status: 200 });
   }
   const exifData = await extractMetadataFromImage(imageBuffer);
   console.log(exifData);
 
   // Check the SiPPP smart contract to see if this is registered
+  const verified = verifySmartContract(ipfsHash);
+  if (!verified) {
+    return NextResponse.json({ message: notVerified}, { status: 200 });
+  }
   
   return NextResponse.json({ message: `✅ Photo verified. Metadata: ${exifData.image.Make}` }, { status: 200 });
 }
+
 
 function getIPFSHash(url: string): string | null {
   try {
@@ -103,6 +110,11 @@ function extractMetadataFromImage(buffer: Buffer): Promise<{ [key: string]: any 
       }
     });
   });
+}
+
+function verifySmartContract(ipfsHash: string): Boolean {
+  // CODE TO VERIFY SMART CONTRACT GOES HERE
+  return true;
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
