@@ -1,10 +1,5 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
-import { create } from 'ipfs-http-client';
-
-// Initialize IPFS client
-const ipfs = create({ url: 'https://ipfs.infura.io:5001/api/v0' });
-
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -70,8 +65,15 @@ function getIPFSHash(url: string): string | null {
   }
 }
 
+async function loadIPFSClient() {
+  const { create } = await import('ipfs-http-client');
+  return create({ url: 'https://ipfs.infura.io:5001/api/v0' });
+}
+
+
 async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   try {
+    const ipfs = await loadIPFSClient();
     const files = await ipfs.get(hash);
     
     // Assuming the file is the first item in the array
