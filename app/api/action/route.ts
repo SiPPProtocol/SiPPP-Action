@@ -1,5 +1,11 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
+import { create } from 'ipfs-http-client';
+
+// Initialize IPFS client
+const ipfs = create({ url: 'https://ipfs.infura.io:5001/api/v0' });
+
+
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -21,6 +27,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: '🤷 No hash detected. Unable to verify.'}, { status: 200 });
   }
   console.log(ipfsHash);
+
+  // Get the image metadata
+  const imageBuffer = loadImageFromIPFS(ipfsHash);
+  console.log('Loaded image', !!imageBuffer)
 
   // Check the SiPPP smart contract to see if this is registered
   
@@ -56,6 +66,27 @@ function getIPFSHash(url: string): string | null {
     
     return hash;
   } catch (error) {
+    return null;
+  }
+}
+
+async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
+  try {
+    const files = await ipfs.get(hash);
+    
+    // Assuming the file is the first item in the array
+    if (files.length === 0) {
+      return null;
+    }
+    
+    const image = files[0];
+    
+    // Read the file content as buffer
+    const buffer = Buffer.from(image.content);
+    
+    return buffer;
+  } catch (error) {
+    console.error('Error fetching image from IPFS:', error);
     return null;
   }
 }
