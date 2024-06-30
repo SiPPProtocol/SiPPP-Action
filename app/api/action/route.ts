@@ -1,6 +1,5 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
-import fetch from 'node-fetch';
 import { Buffer } from 'buffer';
 
 
@@ -67,8 +66,14 @@ function getIPFSHash(url: string): string | null {
   }
 }
 
+async function loadFetch() {
+  const fetchModule = await import('node-fetch');
+  return fetchModule.default;
+}
+
 async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   try {
+    const fetch = await loadFetch();
     const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}`);
     
     if (!response.ok) {
