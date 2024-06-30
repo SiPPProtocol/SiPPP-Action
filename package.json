@@ -1,5 +1,5 @@
 {
-  "name": "Verify with SiPPP",
+  "name": "verify-with-sippp",
   "version": "0.0.1",
   "scripts": {
     "build": "rm -rf .next && next build",

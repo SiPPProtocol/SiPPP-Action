@@ -21,6 +21,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: '🤷 No hash detected. Unable to verify.'}, { status: 200 });
   }
   console.log(ipfsHash);
+
+  // Check the SiPPP smart contract to see if this is registered
   
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
