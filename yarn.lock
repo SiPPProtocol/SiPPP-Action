@@ -201,6 +201,13 @@ abitype@1.0.5:
   resolved "https://registry.npmjs.org/abitype/-/abitype-1.0.5.tgz"
   integrity sha512-YzDhti7cjlfaBhHutMaboYB21Ha3rXR9QTkNJFzYC4kC8YclaiwPBBBJY8ejFdu2wnJeZCVZSMlQJ7fi8S6hsw==
 
+bufferutil@^4.0.1, bufferutil@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.npmjs.org/bufferutil/-/bufferutil-4.0.8.tgz"
+  integrity sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==
+  dependencies:
+    node-gyp-build "^4.3.0"
+
 busboy@1.6.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/busboy/-/busboy-1.6.0.tgz"
@@ -363,6 +370,11 @@ node-fetch@^3.3.2:
     fetch-blob "^3.1.4"
     formdata-polyfill "^4.0.10"
 
+node-gyp-build@^4.3.0:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.8.1.tgz"
+  integrity sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==
+
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
@@ -472,6 +484,13 @@ undici@^5.8.1:
   integrity sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==
   dependencies:
     "@fastify/busboy" "^2.0.0"
+
+utf-8-validate@^6.0.4, utf-8-validate@>=5.0.2:
+  version "6.0.4"
+  resolved "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-6.0.4.tgz"
+  integrity sha512-xu9GQDeFp+eZ6LnCywXN/zBancWvOpUMzgjLPSjy4BRHSmTelvn2E0DG0o1sTiw5hkCKBHo8rwSKncfRfv2EEQ==
+  dependencies:
+    node-gyp-build "^4.3.0"
 
 viem@^2.7.0, viem@^2.7.1, viem@^2.9.28:
   version "2.16.5"

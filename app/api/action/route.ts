@@ -94,7 +94,7 @@ async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   
 function extractMetadataFromImage(buffer: Buffer): Promise<{ [key: string]: any }> {
   return new Promise((resolve, reject) => {
-    exif.ExifImage({ image: buffer }, (error, exifData) => {
+    new exif.ExifImage({ image: buffer }, (error, exifData) => {
       if (error) {
         reject(`Error extracting EXIF data: ${error.message}`);
       } else {
