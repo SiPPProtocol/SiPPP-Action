@@ -19,7 +19,16 @@ export async function POST(req: NextRequest): Promise<Response> {
   
 export async function GET(req: NextRequest): Promise<Response> {
   console.log('GET');
-  return getResponse(req);
+  return NextResponse.json({
+    "name": "Verify with SiPPP",
+    "icon": "verify",
+    "description": "Verify that this photo has been registered with SiPPP 🥤",
+    "aboutUrl": "https://sippp.box",
+    "action": {
+      "type": "post",
+      "postUrl": "https://si-ppp-action.vercel.app/api/action"
+    }
+  }, { status: 200 })
 }
   
 export const dynamic = 'force-dynamic';

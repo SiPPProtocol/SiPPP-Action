@@ -11,7 +11,7 @@ https://si-ppp-action.vercel.app/api/action
 
 To install it, visit:
 
-https://warpcast.com/~/add-cast-action?actionType=post&name=SiPPP&icon=verified&postUrl=https%3A%2F%2Fsi-ppp-action.vercel.app%2Fapi%2Faction
+https://warpcast.com/~/add-cast-action?actionType=post&name=Verify%20with%20SiPPP&icon=verified&postUrl=https%3A%2F%2Fsi-ppp-action.vercel.app%2Fapi%2Faction
 
 
 # TEMPLATE INSTRUCTIONS:  A Frame in 100 lines (or less)
