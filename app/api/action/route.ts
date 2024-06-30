@@ -9,8 +9,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse('Message not valid', { status: 500 });
   }
 
-  const embed = message.raw.action.cast.embeds[0].url;
-  console.log(embed);
+  // Find the url, if any
+  const embedUrl = message?.raw?.action?.cast?.embeds?.[0]?.url;
+  if (!embedUrl) {
+    return new NextResponse({ message: 'No photograph detect to verify.'}, { status: 200 });
+  }
+
+  console.log(embedUrl);
   
   return NextResponse.json({ message: 'Hello from the frame route. Writing a lot of stuff. /n with line breaks' }, { status: 200 });
 }
