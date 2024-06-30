@@ -2,7 +2,8 @@ import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-//   const body: FrameRequest = await req.json();
+  const body: FrameRequest = await req.json();
+  console.log(body);
 //   const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
 
 //   if (!isValid) {
