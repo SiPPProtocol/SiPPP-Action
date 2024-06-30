@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   console.log(body);
-//   const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
+  const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
+  console.log(message);
 
 //   if (!isValid) {
 //     return new NextResponse('Message not valid', { status: 500 });
