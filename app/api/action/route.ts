@@ -12,8 +12,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Find the url, if any
   const embedUrl = message?.raw?.action?.cast?.embeds?.[0]?.url;
   if (!embedUrl) {
-    return new NextResponse.json({ message: 'No photograph detected.'}, { status: 200 });
+    return NextResponse.json({ message: 'No photograph detected.'}, { status: 200 });
   }
+
+  // Get an IPFS hash
+
 
   console.log(embedUrl);
   
