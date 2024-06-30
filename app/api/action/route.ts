@@ -1,6 +1,7 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { Buffer } from 'buffer';
+import exif from 'exif';
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -88,7 +89,18 @@ async function loadImageFromIPFS(hash: string): Promise<Buffer | null> {
   }
 }
   
-  
+function extractMetadataFromImage(buffer: Buffer): Promise<{ [key: string]: any }> {
+  return new Promise((resolve, reject) => {
+    exif.ExifImage({ image: buffer }, (error, exifData) => {
+      if (error) {
+        reject(`Error extracting EXIF data: ${error.message}`);
+      } else {
+        resolve(exifData);
+      }
+    });
+  });
+}
+
 export async function POST(req: NextRequest): Promise<Response> {
   return getResponse(req);
 }
