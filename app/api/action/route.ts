@@ -26,30 +26,30 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: notVerified}, { status: 200 });
   }
 
-  // Get the image and metadata
+  // Get the image
   const imageBuffer = await loadImageFromIPFS(ipfsHash);
   if (!imageBuffer) {
     return NextResponse.json({ message: notDetected}, { status: 200 });
   }
 
+  // Get the metadata
+  let imageMetadata = null;
   try {
-    const imageMetadata = await extractMetadataFromImage(imageBuffer);
-  } catch (error) {
-    return NextResponse.json({ message: notVerified}, { status: 200 });
-  }
-
+    imageMetadata = await extractMetadataFromImage(imageBuffer);
+  } catch (error) {} // Swallow errors, probably a PNG.
   if (!imageMetadata) {
     return NextResponse.json({ message: notVerified}, { status: 200 });
   }
-
   const metadataSummary = getMetadataSummary(imageMetadata);
 
-  // Check the SiPPP smart contract to see if this is registered
+  // Finally, check the SiPPP smart contract to see if this is registered
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
+    // We got this far, so let's give em something about the image metadata.
     return NextResponse.json({ message: `❓ Cannot verify. Metadata: photo ${metadataSummary}`}, { status: 200 });
   }
   
+  // If you got this far, it's def a real photo registered with SiPPP!
   return NextResponse.json({ message: `✅ Verified! Photo ${metadataSummary}`}, { status: 200 });
 }
 
