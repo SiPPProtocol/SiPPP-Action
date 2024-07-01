@@ -41,7 +41,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: notVerified}, { status: 200 });
   }
   
-  return NextResponse.json({ message: '✅ Photo verified.' }, { status: 200 });
+  return NextResponse.json({ message: getVerifiedMessage(imageMetadata) }, { status: 200 });
 }
 
 type ImageMetadata = {
@@ -55,7 +55,7 @@ type ImageMetadata = {
 function getVerifiedMessage(imageMetadata: ImageMetadata): string {
   const make = imageMetadata?.image?.Make || '';
   const model = imageMetadata?.image?.Model || '';
-  const date = imageMetadata?.image?.ModifyDate;
+  const date = imageMetadata?.image?.ModifyDate || 'an unknown date';
   return `✅ This photo was taken with a ${make} ${model} camera on ${date}.`
 }
 
