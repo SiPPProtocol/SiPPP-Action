@@ -44,11 +44,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ message: '✅ Photo verified.' }, { status: 200 });
 }
 
-function getVerifiedMessage(imageMetadata: Object) {
-  const make = imageMetadata?.image?.Make;
-  const model = imageMetadata?.image?.Model;
+type ImageMetadata = {
+  image?: {
+    Make?: string;
+    Model?: string;
+    ModifyDate?: string;
+  };
+};
+
+function getVerifiedMessage(imageMetadata: ImageMetadata): string {
+  const make = imageMetadata?.image?.Make || '';
+  const model = imageMetadata?.image?.Model || '';
   const date = imageMetadata?.image?.ModifyDate;
-  return `✅ This photo was taken with a ${make} ${model} on ${date}.`
+  return `✅ This photo was taken with a ${make} ${model} camera on ${date}.`
 }
 
 function getIPFSHash(url: string): string | null {
