@@ -46,11 +46,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
     // We got this far, so let's give em something about the image metadata.
-    return NextResponse.json({ message: `❓ Cannot verify. Metadata: photo ${metadataSummary}`}, { status: 200 });
+    const message = `❓ Cannot verify. Metadata: photo ${metadataSummary}`}
+    console.log(message);
+    return NextResponse.json({ message }, { status: 200 });
   }
   
   // If you got this far, it's def a real photo registered with SiPPP!
-  return NextResponse.json({ message: `✅ Verified! Photo ${metadataSummary}`}, { status: 200 });
+  const message = `✅ Verified! Photo ${metadataSummary}`;
+  console.log(message);
+  return NextResponse.json({ message }, { status: 200 });
 }
 
 type ImageMetadata = {
