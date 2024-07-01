@@ -47,7 +47,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
     // We got this far, so let's give em something about the image metadata.
-    let uvMessage = `❓ Unverified. Metadata: ${metadataSummary}`
+    let uvMessage = `❓ Unverified. Metadata says ${metadataSummary}`
     if (uvMessage.length > maxLength)
       uvMessage = notVerified;
     return NextResponse.json({ message: uvMessage }, { status: 200 });
