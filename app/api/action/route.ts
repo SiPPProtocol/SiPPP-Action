@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Buffer } from 'buffer';
 import exif from 'exif';
 
-const notDetected = '🤦 No photograph detected.'
-const notVerified = '❓ The photo in this post cannot be verified.'
+const notDetected = '🤦 No image detected.'
+const notVerified = '❓ The image in this post cannot be verified.'
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
