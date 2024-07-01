@@ -46,14 +46,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
     // We got this far, so let's give em something about the image metadata.
-    const uvMessage = `❓ Cannot verify. Metadata: photo ${metadataSummary}`
-    console.log(uvMessage);
+    const uvMessage = `❓ Unverified. Metadata: photo ${metadataSummary}`
+    console.log(uvMessage, uvMessage.length);
     return NextResponse.json({ message: uvMessage }, { status: 200 });
   }
   
   // If you got this far, it's def a real photo registered with SiPPP!
   const vMessage = `✅ Verified! Photo ${metadataSummary}`;
-  console.log(vMessage);
+  console.log(vMessage, vMessage.length);
   return NextResponse.json({ message: vMessage }, { status: 200 });
 }
 
@@ -66,7 +66,11 @@ type ImageMetadata = {
 };
 
 function getMetadataSummary(imageMetadata: ImageMetadata): string {
-  const make = imageMetadata?.image?.Make || '';
+  let make = imageMetadata?.image?.Make || '';
+  // Drop 'Apple' because our char count is precious. 
+  // All Apple phones are iPhones, so these chars have no information.
+  if (make == 'Apple')
+    make = ''
   const model = imageMetadata?.image?.Model || 'camera';
   const date = imageMetadata?.image?.ModifyDate || 'an unknown date';
   return `taken with ${make} ${model} on ${date}`
