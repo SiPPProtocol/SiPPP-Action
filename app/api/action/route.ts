@@ -4,7 +4,7 @@ import { Buffer } from 'buffer';
 import exif from 'exif';
 
 const notDetected = '🤦 No image detected.'
-const notVerified = '❓ The image in this post cannot be verified.'
+const notVerified = '❓ The image in this cast cannot be verified.'
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
