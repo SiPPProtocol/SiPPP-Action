@@ -32,8 +32,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (!imageBuffer) {
     return NextResponse.json({ message: notDetected}, { status: 200 });
   }
-  const exifData = await extractMetadataFromImage(imageBuffer);
-  console.log(exifData);
+  const imageMetadata = await extractMetadataFromImage(imageBuffer);
+  console.log(imageMetadata);
 
   // Check the SiPPP smart contract to see if this is registered
   const verified = verifySmartContract(ipfsHash);
@@ -41,9 +41,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: notVerified}, { status: 200 });
   }
   
-  return NextResponse.json({ message: `✅ Photo verified. Metadata: ${exifData.image.Make}` }, { status: 200 });
+  return NextResponse.json({ message: '✅ Photo verified.' }, { status: 200 });
 }
 
+function getVerifiedMessage(imageMetadata: Object) {
+  const make = imageMetadata?.image?.Make;
+  const model = imageMetadata?.image?.Model;
+  const date = imageMetadata?.image?.ModifyDate;
+  return `✅ This photo was taken with a ${make} ${model} on ${date}.`
+}
 
 function getIPFSHash(url: string): string | null {
   try {
