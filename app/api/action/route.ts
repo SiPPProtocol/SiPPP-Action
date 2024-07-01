@@ -25,7 +25,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (!ipfsHash) {
     return NextResponse.json({ message: notVerified}, { status: 200 });
   }
-  console.log(ipfsHash);
 
   // Get the image and metadata
   const imageBuffer = await loadImageFromIPFS(ipfsHash);
@@ -33,15 +32,20 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: notDetected}, { status: 200 });
   }
   const imageMetadata = await extractMetadataFromImage(imageBuffer);
-  console.log(imageMetadata);
+
+  if (!imageMetadata) {
+    return NextResponse.json({ message: notVerified}, { status: 200 });
+  }
+
+  const metadataSummary = getMetadataSummary(imageMetadata);
 
   // Check the SiPPP smart contract to see if this is registered
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
-    return NextResponse.json({ message: notVerified}, { status: 200 });
+    return NextResponse.json({ message: `❓ Cannot verify. Metadata: photo ${metadataSummary}`}, { status: 200 });
   }
   
-  return NextResponse.json({ message: getVerifiedMessage(imageMetadata) }, { status: 200 });
+  return NextResponse.json({ message: `✅ Verified! Photo ${metadataSummary}`}, { status: 200 });
 }
 
 type ImageMetadata = {
@@ -52,11 +56,11 @@ type ImageMetadata = {
   };
 };
 
-function getVerifiedMessage(imageMetadata: ImageMetadata): string {
+function getMetadataSummary(imageMetadata: ImageMetadata): string {
   const make = imageMetadata?.image?.Make || '';
-  const model = imageMetadata?.image?.Model || '';
+  const model = imageMetadata?.image?.Model || 'camera';
   const date = imageMetadata?.image?.ModifyDate || 'an unknown date';
-  return `✅ This photo was taken with a ${make} ${model} camera on ${date}.`
+  return `taken with ${make} ${model} on ${date}`
 }
 
 function getIPFSHash(url: string): string | null {
