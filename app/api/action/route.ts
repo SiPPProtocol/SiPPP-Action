@@ -132,7 +132,7 @@ function extractMetadataFromImage(buffer: Buffer): Promise<{ [key: string]: any 
 
 function verifySmartContract(ipfsHash: string): Boolean {
   // CODE TO VERIFY SMART CONTRACT GOES HERE
-  return true;
+  return false;
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
