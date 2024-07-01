@@ -31,7 +31,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (!imageBuffer) {
     return NextResponse.json({ message: notDetected}, { status: 200 });
   }
-  const imageMetadata = await extractMetadataFromImage(imageBuffer);
+
+  try {
+    const imageMetadata = await extractMetadataFromImage(imageBuffer);
+  } catch (error) {
+    return NextResponse.json({ message: notVerified}, { status: 200 });
+  }
 
   if (!imageMetadata) {
     return NextResponse.json({ message: notVerified}, { status: 200 });
