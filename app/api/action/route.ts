@@ -5,6 +5,7 @@ import exif from 'exif';
 
 const notDetected = '🤦 No image detected.'
 const notVerified = '❓ The image in this cast cannot be verified.'
+const maxLength = 80
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -46,14 +47,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const verified = verifySmartContract(ipfsHash);
   if (!verified) {
     // We got this far, so let's give em something about the image metadata.
-    const uvMessage = `❓ Unverified. Metadata: photo ${metadataSummary}`
-    console.log(uvMessage, uvMessage.length);
+    let uvMessage = `❓ Unverified. Metadata: ${metadataSummary}`
+    if (uvMessage.length > maxLength)
+      uvMessage = notVerified;
     return NextResponse.json({ message: uvMessage }, { status: 200 });
   }
   
   // If you got this far, it's def a real photo registered with SiPPP!
-  const vMessage = `✅ Verified! Photo ${metadataSummary}`;
-  console.log(vMessage, vMessage.length);
+  let vMessage = `✅ Verified! Photo ${metadataSummary}`;
+  if (vMessage.length > maxLength)
+    vMessage = '✅ Successfully verified with SiPPP!'
   return NextResponse.json({ message: vMessage }, { status: 200 });
 }
 
